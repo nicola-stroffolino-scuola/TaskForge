@@ -15,7 +15,7 @@ public class HomeController(AppDbContext dbContext) : Controller {
         return View();
     }
     
-    [Route("Home/Users/{id?}")]
+    [Route("Home/Users/{id}")]
     public IActionResult Users(string id) {
         var user = dbContext.Users.FirstOrDefault(u => u.Id == id);
         return View("User", user);
