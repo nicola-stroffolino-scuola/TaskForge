@@ -7,7 +7,8 @@ using TaskForge.Models;
 
 namespace TaskForge.Data;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<AppUser>(options) {    
+public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<AppUser>(options) { 
+    public DbSet<Service> Services { get; set; }  
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);
 
@@ -58,25 +59,39 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
 }
 
 public class AppUser : IdentityUser {
-    [Required]
-    public required string Name { get; set; }
+    public string? Name { get; set; }
+    public string? Surname { get; set; }
+    public string? Gender { get; set; }
+    public DateOnly DateOfBirth { get; set; }
+    public string? Nationality { get; set; }
+    public string? Languages { get; set; }
+    public string? ProfilePicture { get; set; }
+    public string? Bio { get; set; }
 
-    [Required]
-    public required string Surname { get; set; }
-    
-    [Required]
-    public required string Gender { get; set; }
+    public virtual ICollection<Service> Services { get; set; } = [];
+    public virtual ICollection<Order> Orders { get; set; } = [];
+}
 
-    [Required]
-    public required DateOnly DateOfBirth { get; set; }
+public class Service {
+    public int ServiceId { get; set; }
+    public string? Title { get; set; }
+    public string? Description { get; set; }
+    public int Price { get; set; }
+    public string? EstimatedTime { get; set; }
+    public string? Images { get; set; }
 
-    [Required]
-    public required string Nationality { get; set; }
-    
-    [Required]
-    public required string Languages { get; set; }
+    public string? ProviderId { get; set; }
+    public AppUser? Provider { get; set; }
+    public virtual ICollection<Order> Orders { get; set; } = [];
+}
 
-    [Required]
-    public required string ProfilePicture { get; set; }
+public class Order {
+    public int OrderId { get; set; }
+    public DateTime Timestamp { get; set; }
+
+    public AppUser? Client { get; set; }
+    public string? ClientId { get; set; }
+    public Service? Service { get; set; }
+    public int ServiceId { get; set; }
 }
 

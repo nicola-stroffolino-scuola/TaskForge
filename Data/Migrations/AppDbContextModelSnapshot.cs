@@ -45,13 +45,13 @@ namespace TaskForge.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "da4a2611-e66f-4bf4-9f22-057cbaf169fb",
+                            Id = "ce9e70d2-651c-4fba-bd74-012f239a0f7d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "dd9d74b6-2647-4bd4-b63f-793bcbbde0a6",
+                            Id = "3ac61289-3d43-439e-9d5c-e49c24a84ee4",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -165,6 +165,9 @@ namespace TaskForge.Data.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("UserId");
 
+                    b.Property<string>("Bio")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("TEXT");
@@ -177,19 +180,15 @@ namespace TaskForge.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Languages")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nationality")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedEmail")
@@ -204,14 +203,12 @@ namespace TaskForge.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProfilePicture")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Surname")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("UserName")
@@ -232,22 +229,77 @@ namespace TaskForge.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "666d59d8-2be7-4fe9-8fbd-6d31ff4cb5e8",
-                            ConcurrencyStamp = "6654e094-a528-4cb2-9e48-bf0d06f6da2c",
-                            DateOfBirth = new DateOnly(2005, 9, 17),
+                            Id = "05f005f7-f65d-4102-8f4e-22bc453d80f3",
+                            ConcurrencyStamp = "edbf2c74-189d-4955-8956-7be23c86eefc",
+                            DateOfBirth = new DateOnly(2000, 1, 1),
                             Email = "admin@gmail.com",
                             Gender = "Male",
-                            Languages = "Italian,English",
+                            Languages = "English,Italian",
                             Name = "Admin",
                             Nationality = "Italian",
                             NormalizedEmail = "ADMIN@GMAIL.COM",
-                            NormalizedUserName = "ADMIN.ADMIN",
+                            NormalizedUserName = "ADMIN",
                             PasswordHash = "AQAAAAIAAYagAAAAEGCS/ZW/brIXoz5cp3HLH+hWlgQg2gLtVrkkfXw+xSiNpHWS0NCcTD+5X57xfi5Z/w==",
                             ProfilePicture = "default.png",
-                            SecurityStamp = "c7070b57-7f23-435a-967d-0c880a12c525",
+                            SecurityStamp = "1d3522a5-1a93-4cbf-aee3-d179ac0581d9",
                             Surname = "Admin",
-                            UserName = "admin.admin"
+                            UserName = "admin"
                         });
+                });
+
+            modelBuilder.Entity("TaskForge.Data.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ClientId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("TaskForge.Data.Service", b =>
+                {
+                    b.Property<int>("ServiceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EstimatedTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Images")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ProviderId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ServiceId");
+
+                    b.HasIndex("ProviderId");
+
+                    b.ToTable("Services");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -299,6 +351,44 @@ namespace TaskForge.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("TaskForge.Data.Order", b =>
+                {
+                    b.HasOne("TaskForge.Data.AppUser", "Client")
+                        .WithMany("Orders")
+                        .HasForeignKey("ClientId");
+
+                    b.HasOne("TaskForge.Data.Service", "Service")
+                        .WithMany("Orders")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("TaskForge.Data.Service", b =>
+                {
+                    b.HasOne("TaskForge.Data.AppUser", "Provider")
+                        .WithMany("Services")
+                        .HasForeignKey("ProviderId");
+
+                    b.Navigation("Provider");
+                });
+
+            modelBuilder.Entity("TaskForge.Data.AppUser", b =>
+                {
+                    b.Navigation("Orders");
+
+                    b.Navigation("Services");
+                });
+
+            modelBuilder.Entity("TaskForge.Data.Service", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }
