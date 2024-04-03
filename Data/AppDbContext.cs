@@ -76,7 +76,7 @@ public class Service {
     public int ServiceId { get; set; }
     public string? Title { get; set; }
     public string? Description { get; set; }
-    public int Price { get; set; }
+    public double Price { get; set; }
     public string? EstimatedTime { get; set; }
     public string? Images { get; set; }
 

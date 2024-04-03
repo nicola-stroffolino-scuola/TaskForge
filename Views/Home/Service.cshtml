@@ -1,0 +1,11 @@
+@using TaskForge.Data;
+@model Service;
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+@if (Model.Images is not null) {
+    @foreach (var img in Model.Images.Split('*')) {
+        <img src="idk">
+    }
+}

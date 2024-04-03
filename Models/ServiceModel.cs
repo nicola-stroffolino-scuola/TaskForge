@@ -1,9 +1,14 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace TaskForge.Models;
 
 public class ServiceModel {
-    public string? Title { get; set; }
+    [Required]
+    public required string Title { get; set; }
     public string? Description { get; set; }
-    public int Price { get; set; }
-    public string? EstimatedTime { get; set; }
-    public IEnumerable<IFormFile> Images { get; set; } = [];
+    [Required]
+    public required double Price { get; set; }
+    [Required]
+    public required string EstimatedTime { get; set; }
+    public IEnumerable<IFormFile>? Images { get; set; } = [];
 }
