@@ -20,35 +20,30 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
             .Ignore(u => u.LockoutEnd)
             .Ignore(u => u.AccessFailedCount)
             .Property(e => e.Id).HasColumnName("UserId");
+            
         modelBuilder.Entity<AppUser>()
             .HasData(
                 new AppUser() {
-                    Id = "1",
                     Name = "Admin",
                     Surname = "Admin",
-                    UserName = "admin.admin",
+                    UserName = "admin",
+                    NormalizedUserName = "ADMIN",
                     Email = "admin@gmail.com",
+                    NormalizedEmail = "ADMIN@GMAIL.COM",
                     Gender = "Male",
-                    DateOfBirth = new DateOnly(2005, 09, 17),
+                    DateOfBirth = new DateOnly(2000, 01, 01),
                     Nationality = "Italian",
-                    Languages = "Italian,English",
-                    ProfilePicture = "default.png"
+                    Languages = "English,Italian",
+                    ProfilePicture = "default.png",
+                    PasswordHash = "AQAAAAIAAYagAAAAEGCS/ZW/brIXoz5cp3HLH+hWlgQg2gLtVrkkfXw+xSiNpHWS0NCcTD+5X57xfi5Z/w=="
                 }
             );
 
         modelBuilder.Entity<IdentityRole>()
             .HasData(
-                new List<object> {
-                    new IdentityRole() { Id = "1", Name = "Admin", NormalizedName = "ADMIN" },
-                    new IdentityRole() { Id = "2", Name = "User", NormalizedName = "USER" }
-                }
-            );
-
-        modelBuilder.Entity<IdentityUserRole<string>>()
-            .HasData(
-                new List<object> {
-                    new IdentityUserRole<string>() { UserId = "1", RoleId = "1" },
-                    new IdentityUserRole<string>() { UserId = "1", RoleId = "2" }
+                new List<IdentityRole> {
+                    new() { Name = "Admin", NormalizedName = "ADMIN" },
+                    new() { Name = "User", NormalizedName = "USER" }
                 }
             );
 

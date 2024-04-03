@@ -10,6 +10,9 @@ public class Register {
     
     [Required]
     public required string Surname { get; set; }
+
+    [Required]
+    public required string Username { get; set; }
     
     [Required]
     [DataType(DataType.EmailAddress)]
@@ -41,7 +44,8 @@ public class Register {
 
 public enum Gender {
     Male,
-    Female
+    Female,
+    Rather_Not_Say
 }
 
 public enum Nationality

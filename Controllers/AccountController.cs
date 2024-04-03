@@ -16,7 +16,7 @@ public class AccountController(SignInManager<AppUser> signInManager, UserManager
             AppUser user = new() {
                 Name = model.Name,
                 Surname = model.Surname,
-                UserName = model.Surname.ToLower() + '.' + model.Name.ToLower(),
+                UserName = model.Username,
                 Email = model.Email,
                 Gender = Enum.GetName(typeof(Gender), model.Gender)!,
                 DateOfBirth = model.DateOfBirth,

@@ -163,23 +163,14 @@ namespace TaskForge.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", null, "Admin", "ADMIN" },
-                    { "2", null, "User", "USER" }
+                    { "da4a2611-e66f-4bf4-9f22-057cbaf169fb", null, "Admin", "ADMIN" },
+                    { "dd9d74b6-2647-4bd4-b63f-793bcbbde0a6", null, "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserId", "ConcurrencyStamp", "DateOfBirth", "Email", "Gender", "Languages", "Name", "Nationality", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "ProfilePicture", "SecurityStamp", "Surname", "UserName" },
-                values: new object[] { "1", "fb292759-df32-4e21-b340-c3738437de84", new DateOnly(2005, 9, 17), "admin@gmail.com", "Male", "Italian,English", "Admin", "Italian", null, null, null, "default.png", "3a7d0af5-ed1a-4b07-ae12-97ed7849e198", "Admin", "admin.admin" });
-
-            migrationBuilder.InsertData(
-                table: "UserRoles",
-                columns: new[] { "RoleId", "UserId" },
-                values: new object[,]
-                {
-                    { "1", "1" },
-                    { "2", "1" }
-                });
+                values: new object[] { "666d59d8-2be7-4fe9-8fbd-6d31ff4cb5e8", "6654e094-a528-4cb2-9e48-bf0d06f6da2c", new DateOnly(2005, 9, 17), "admin@gmail.com", "Male", "Italian,English", "Admin", "Italian", "ADMIN@GMAIL.COM", "ADMIN.ADMIN", "AQAAAAIAAYagAAAAEGCS/ZW/brIXoz5cp3HLH+hWlgQg2gLtVrkkfXw+xSiNpHWS0NCcTD+5X57xfi5Z/w==", "default.png", "c7070b57-7f23-435a-967d-0c880a12c525", "Admin", "admin.admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",

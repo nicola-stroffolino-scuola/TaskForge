@@ -11,7 +11,7 @@ using TaskForge.Data;
 namespace TaskForge.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240313215659_First Migration")]
+    [Migration("20240324180123_First Migration")]
     partial class FirstMigration
     {
         /// <inheritdoc />
@@ -48,13 +48,13 @@ namespace TaskForge.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1",
+                            Id = "da4a2611-e66f-4bf4-9f22-057cbaf169fb",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "2",
+                            Id = "dd9d74b6-2647-4bd4-b63f-793bcbbde0a6",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -141,18 +141,6 @@ namespace TaskForge.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "1",
-                            RoleId = "1"
-                        },
-                        new
-                        {
-                            UserId = "1",
-                            RoleId = "2"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -247,16 +235,19 @@ namespace TaskForge.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1",
-                            ConcurrencyStamp = "fb292759-df32-4e21-b340-c3738437de84",
+                            Id = "666d59d8-2be7-4fe9-8fbd-6d31ff4cb5e8",
+                            ConcurrencyStamp = "6654e094-a528-4cb2-9e48-bf0d06f6da2c",
                             DateOfBirth = new DateOnly(2005, 9, 17),
                             Email = "admin@gmail.com",
                             Gender = "Male",
                             Languages = "Italian,English",
                             Name = "Admin",
                             Nationality = "Italian",
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN.ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGCS/ZW/brIXoz5cp3HLH+hWlgQg2gLtVrkkfXw+xSiNpHWS0NCcTD+5X57xfi5Z/w==",
                             ProfilePicture = "default.png",
-                            SecurityStamp = "3a7d0af5-ed1a-4b07-ae12-97ed7849e198",
+                            SecurityStamp = "c7070b57-7f23-435a-967d-0c880a12c525",
                             Surname = "Admin",
                             UserName = "admin.admin"
                         });
