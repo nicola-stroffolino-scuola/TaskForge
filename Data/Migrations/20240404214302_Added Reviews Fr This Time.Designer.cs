@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskForge.Data;
 
@@ -10,9 +11,11 @@ using TaskForge.Data;
 namespace TaskForge.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240404214302_Added Reviews Fr This Time")]
+    partial class AddedReviewsFrThisTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
@@ -45,13 +48,13 @@ namespace TaskForge.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "dc7415fd-b7d5-4e54-9a73-471346beaa82",
+                            Id = "1ad18ab1-e28d-4ea6-a126-1790aacd893b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "7f197646-ddd0-4830-a4ba-7ca8754e054e",
+                            Id = "3f76466e-7320-42b1-9906-a24e819f4211",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -229,8 +232,8 @@ namespace TaskForge.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "66e4a8cb-6004-443c-a911-9ad0b3857eb2",
-                            ConcurrencyStamp = "896fbab5-4733-47bd-ba45-a31b74d80361",
+                            Id = "4a649760-8c83-45d3-b1e2-27888dbc2c43",
+                            ConcurrencyStamp = "7535659f-941f-4e29-b37b-2f50c9026341",
                             DateOfBirth = new DateOnly(2000, 1, 1),
                             Email = "admin@gmail.com",
                             Gender = "Male",
@@ -241,7 +244,7 @@ namespace TaskForge.Data.Migrations
                             NormalizedUserName = "ADMIN",
                             PasswordHash = "AQAAAAIAAYagAAAAEGCS/ZW/brIXoz5cp3HLH+hWlgQg2gLtVrkkfXw+xSiNpHWS0NCcTD+5X57xfi5Z/w==",
                             ProfilePicture = "default.png",
-                            SecurityStamp = "5b0cc6cd-a681-4ff3-b784-76b36ec46d18",
+                            SecurityStamp = "85bd0ece-8384-41af-9aac-00ae49961bb9",
                             Surname = "Admin",
                             UserName = "admin"
                         });
@@ -283,9 +286,6 @@ namespace TaskForge.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("IssuerId")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("ServiceId")
                         .HasColumnType("INTEGER");
 
@@ -299,8 +299,6 @@ namespace TaskForge.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("ReviewId");
-
-                    b.HasIndex("IssuerId");
 
                     b.HasIndex("ServiceId");
 
@@ -408,17 +406,11 @@ namespace TaskForge.Data.Migrations
 
             modelBuilder.Entity("TaskForge.Data.Review", b =>
                 {
-                    b.HasOne("TaskForge.Data.AppUser", "Issuer")
-                        .WithMany("Reviews")
-                        .HasForeignKey("IssuerId");
-
                     b.HasOne("TaskForge.Data.Service", "Service")
                         .WithMany("Reviews")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Issuer");
 
                     b.Navigation("Service");
                 });
@@ -435,8 +427,6 @@ namespace TaskForge.Data.Migrations
             modelBuilder.Entity("TaskForge.Data.AppUser", b =>
                 {
                     b.Navigation("Orders");
-
-                    b.Navigation("Reviews");
 
                     b.Navigation("Services");
                 });

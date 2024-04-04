@@ -8,7 +8,10 @@ using TaskForge.Models;
 namespace TaskForge.Data;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<AppUser>(options) { 
-    public DbSet<Service> Services { get; set; }  
+    public DbSet<Service> Services { get; set; }
+    public DbSet<Order> Orders { get; set; } 
+    public DbSet<Review> Reviews { get; set; } 
+
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);
 
@@ -70,6 +73,7 @@ public class AppUser : IdentityUser {
 
     public virtual ICollection<Service> Services { get; set; } = [];
     public virtual ICollection<Order> Orders { get; set; } = [];
+    public virtual ICollection<Review> Reviews { get; set; } = [];
 }
 
 public class Service {
@@ -83,11 +87,14 @@ public class Service {
     public string? ProviderId { get; set; }
     public AppUser? Provider { get; set; }
     public virtual ICollection<Order> Orders { get; set; } = [];
+    public virtual ICollection<Review> Reviews { get; set; } = [];
 }
 
 public class Order {
     public int OrderId { get; set; }
-    public DateTime Timestamp { get; set; }
+    public string? Status { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
 
     public AppUser? Client { get; set; }
     public string? ClientId { get; set; }
@@ -95,3 +102,14 @@ public class Order {
     public int ServiceId { get; set; }
 }
 
+public class Review {
+    public int ReviewId { get; set; }
+    public string? Subject { get; set; }
+    public string? Text { get; set; }
+    public double Stars { get; set; }
+
+    public Service? Service { get; set; }
+    public int ServiceId { get; set; }
+    public AppUser? Issuer { get; set; }
+    public string? IssuerId { get; set; }
+}

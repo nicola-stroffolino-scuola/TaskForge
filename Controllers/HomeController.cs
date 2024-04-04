@@ -58,7 +58,6 @@ public class HomeController(AppDbContext dbContext, UserManager<AppUser> userMan
                     if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
 
                     var filePath = Path.Combine(folderPath, fileName);
-                    Console.WriteLine(filePath);
 
                     using var stream = new FileStream(filePath, FileMode.Create);
                     await image.CopyToAsync(stream);
@@ -72,14 +71,29 @@ public class HomeController(AppDbContext dbContext, UserManager<AppUser> userMan
         newService.Images = string.Join('*', imgNames);
         dbContext.SaveChanges();
 
-        return RedirectToAction("Services", new { id = newService.ServiceId });
+        return RedirectToAction("Service", new { id = newService.ServiceId });
     }
 
-    public IActionResult Services(int id) {
+    public IActionResult Service(int id) {
         var service = dbContext.Services
             .Include(s => s.Provider)
             .FirstOrDefault(s => s.ServiceId == id);
         return View("Service", service);
+    }
+
+    public IActionResult Browse(string q) {
+        if (q is null) return View(dbContext.Services.Include(s => s.Provider));
+
+        q = q.ToLower();
+        var services = dbContext.Services
+            .Include(s => s.Provider)
+            .Where(s =>
+                (s.Title != null && s.Title.ToLower().Contains(q)) ||
+                (s.Description != null && s.Description.ToLower().Contains(q)) ||
+                (s.Provider != null && s.Provider.UserName!.ToLower().Contains(q)) // Forse
+            );
+
+        return View(services);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

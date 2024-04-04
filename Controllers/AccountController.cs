@@ -27,6 +27,11 @@ public class AccountController(SignInManager<AppUser> signInManager, UserManager
 
             var result = await userManager.CreateAsync(user, model.Password!);
 
+            // Tutto cio dovrebbe andare ma non ho ancora provato
+            var defaultImgPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", "default.png");
+            var newImgPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/user-pfp", $"{user.Id}.png");
+            System.IO.File.Copy(defaultImgPath, newImgPath);
+
             if (result.Succeeded) {
                 await userManager.AddToRoleAsync(user, "User");
 
