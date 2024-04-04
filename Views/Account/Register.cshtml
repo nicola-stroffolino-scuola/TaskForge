@@ -90,14 +90,15 @@
         <div class="form-group d-flex align-items-center justify-content-center mb-3">
             <label asp-for="Languages" class="w-25 text-end">Languages</label>
             <div class="w-75">
-                <select asp-for="Languages" class="form-select w-75 mx-auto" required multiple>
-                    <option value="" selected disabled>Select Language</option>
+                <select asp-for="Languages" class="form-select w-75 mx-auto" id="multiple-checkboxes" required multiple>
                     @foreach(var nat in Enum.GetValues(typeof(Language)).Cast<Language>()) {
                         <option value="@nat">@Enum.GetName(typeof(Language), nat)?.Replace('_', ' ')</option>
                     }
                 </select>
             </div>
+            
         </div>
+        
         @* <div class="form-group d-flex align-items-center justify-content-center mb-3">
             <label asp-for="Role" class="w-25 text-end">Role</label>
             <div class="w-75">
@@ -118,6 +119,14 @@
         </div>
     </form>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#multiple-checkboxes').multiselect({
+          includeSelectAllOption: true,
+        });
+    });
+</script>
 
 @section Scripts{
     @{

@@ -1,3 +1,4 @@
+
 html {
   font-size: 14px;
 }
@@ -8,7 +9,11 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
@@ -19,4 +24,22 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+.background-image {
+  position: fixed;
+  background-image: url('/img/wallpaper.png');
+  background-size: cover;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+}
+.background-image-wrap {
+  position: fixed;
+  z-index: -9;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  background-color: rgba(146, 7, 135, 0.219);
 }

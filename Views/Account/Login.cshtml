@@ -1,43 +1,47 @@
-@using TaskForge.Models;
+@using TaskForge.Models
 @model Login
 @{
     ViewData["Title"] = "Login";
 }
 
-<div class="row d-flex align-items-center justify-content-center">
-    <div class="col-md-3 card p-3">
-        <h2 class="text-center text-info">Login</h2>
+<link rel="stylesheet" href="~/css/site.css">
+
+<div style="display: flex; justify-content: center; align-items: center; font-family: Arial, sans-serif;">
+    <div class="login-form">
+        <h2 style="text-align: center; color: #fcfbfb; margin-bottom: 20px;">Login</h2>
         <form asp-action="Login" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="mb-1">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <div class="mb-3">
+                <label asp-for="Username" class="form-label" style="color: #fff;">Username</label>
+                <input asp-for="Username" class="form-control transparent-input" />
+                <span asp-validation-for="Username" class="text-danger" style="color: #fff;"></span>
             </div>
-            <div class="mb-1">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label" style="color: #fff;">Password</label>
+                <input asp-for="Password" class="form-control transparent-input" />
+                <span asp-validation-for="Password" class="text-danger" style="color: #fff;"></span>
             </div>
-            <div class="mb-1 form-check">
-                <label class="form-check-label">
-                    <input asp-for="RememberMe" class="form-check-input" /> @Html.DisplayNameFor(a=>a.RememberMe)
-                </label>
+            <div class="mb-3 form-check">
+                <input asp-for="RememberMe" class="form-check-input" />
+                <label class="form-check-label" for="RememberMe" style="color: #fff;">Remember me</label>
             </div>
-            <div class="row">
-                <div class="col-8">
-                    <a asp-action="Register" class="text-decoration-none float-start mt-2">Don't have account?</a>
-                </div>
-                <div class="col-4">
-                    <input type="submit" value="Login" class="btn btn-primary btn-sm float-end" />
-                </div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg">Login</button>
             </div>
         </form>
+        <hr class="my-4">
+        <div class="text-center">
+            <p class="mb-0" style="color: #fff;">Don't have an account?</p>
+            <a asp-action="Register" class="text-decoration-none" style="color: #fff;">Sign Up</a>
+        </div>
     </div>
 </div>
+<div class="background-image"></div>
+<div class="background-image-wrap"></div>
 
 @section Scripts{
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
