@@ -1,11 +1,62 @@
 @using TaskForge.Data;
-@model Service;
+@model Service
 @{
-    ViewData["Title"] = Model.Title;
+    ViewData["Title"] = "Service";
 }
 
-@if (Model.Images is not null) {
-    @foreach (var img in Model.Images.Split('*')) {
-        <img src="idk">
-    }
-}
+<div class="container mt-4">
+
+    <!-- Product Details Section -->
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Product Images Carousel -->
+            <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @{
+                        bool isFirst = true;
+                        if (Model.Images is not null) {
+                            foreach (var img in Model.Images.Split('*')) {
+                                <div class="carousel-item @(isFirst ? "active" : "")">
+                                    <img src="~/img/user-services/@Model.ProviderId/@img" class="d-block w-100" alt="Service Image">
+                                </div>
+                                isFirst = false;
+                            }
+                        }
+                    }
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col">
+                    <h1>@Model.Title</h1>
+                    <p class="lead">@Model.Description</p>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Price: $@Model.Price</h5>
+                            <p class="card-text">Estimated Time: @Model.EstimatedTime</p>
+                            <a href="#" class="btn btn-primary">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <h2>Provider Information</h2>
+                    <p><strong>Name:</strong> @Model.Provider!.Name @Model.Provider.Surname</p>
+                    <p><strong>Email:</strong> @Model.Provider.Email</p>
+                    <p><strong>Languages:</strong> @Model.Provider.Languages</p>
+                    <!-- Add more provider information as needed -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

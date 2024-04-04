@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TaskForge.Data;
 using TaskForge.Models;
 
@@ -73,7 +74,10 @@ public class HomeController(AppDbContext dbContext, UserManager<AppUser> userMan
     }
 
     public IActionResult Services(int id) {
-        return View("Service");
+        var service = dbContext.Services
+            .Include(s => s.Provider)
+            .FirstOrDefault(s => s.ServiceId == id);
+        return View("Service", service);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
