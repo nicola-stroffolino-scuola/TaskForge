@@ -20,7 +20,9 @@ public class HomeController(AppDbContext dbContext, UserManager<AppUser> userMan
     
     [Route("Home/Users/{id}")]
     public IActionResult Users(string id) {
-        var user = dbContext.Users.FirstOrDefault(u => u.Id == id);
+        var user = dbContext.Users
+            .Include(u => u.Services)
+            .FirstOrDefault(u => u.Id == id);
         return View("User", user);
     }
 

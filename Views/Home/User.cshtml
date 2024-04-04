@@ -4,4 +4,57 @@
     ViewData["Title"] = Model.Name + " " + Model.Surname;
 }
 
-<img src="~/img/default_1.png">
+<link rel="stylesheet" href="~/css/styles.css">
+
+<div class="background-image3"></div>
+<div class="background-image-wrap3"></div>
+
+<div class="container profile-container transparent-form">
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <img src="~/img/default_1.png" alt="Profile Picture" class="profile-picture">
+        </div>
+        <div class="col-md-8">
+            <h2>@Model.Name @Model.Surname</h2>
+            <p><strong>Email:</strong> @Model.Email</p>
+            <p><strong>Gender:</strong> @Model.Gender</p>
+            <p><strong>Date of Birth:</strong> @Model.DateOfBirth.ToString("dd/MM/yyyy")</p>
+            <p><strong>Nationality:</strong> @Model.Nationality</p>
+            <p><strong>Languages:</strong> @Model.Languages</p>
+            <p><strong>Bio:</strong> @Model.Bio</p>
+        </div>
+    </div>
+    
+    <hr>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Services</h3>
+            <div class="card-group">
+                @if (Model.Services.Any())
+                {
+                    @foreach (var service in Model.Services)
+                    {
+                        <div class="card mx-2 transparent-card" style="max-width: 200px;">
+                            <div class="card-body">
+                                <h5 class="card-title">@service.Title</h5>
+                                <p class="card-text">@service.Description</p>
+                                <p class="card-text"><strong>Cost:</strong> $@service.Price</p>
+                                <a href="~/Home/Services/@service.ServiceId" class="btn btn-primary btn-sm">Details</a>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>No services published yet.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.1/js/bootstrap.bundle.min.js" integrity="sha384-dZUXwboK2BJzYanY0OQ7v3rMZps2w0rQ5ZWW4tcKXgz2apmF+cSDifzV/0BXOrDz" crossorigin="anonymous"></script>
+}
