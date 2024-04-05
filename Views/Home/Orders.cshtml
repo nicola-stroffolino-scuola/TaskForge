@@ -1,0 +1,79 @@
+@using TaskForge.Data
+@using Microsoft.EntityFrameworkCore
+@inject AppDbContext dbContext;
+@model IQueryable<Order>?
+
+@{
+    ViewData["Title"] = "My Orders";
+}
+
+<div class="container">
+    <h1 class="mt-5">@ViewData["Title"]</h1>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive mt-4">
+             <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr class="align-middle text-center">
+                        <th>Service Provider</th>
+                        <th>Order Title</th>
+                        <th>Status</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {   
+                        if (order.Status == OrderStatus.Acknowledged) continue;
+                        var provider = dbContext.Services
+                            .Include(s => s.Provider)
+                            .First(s => s.ProviderId == order.Service!.ProviderId).Provider;
+
+                        <tr class="align-middle text-center">
+                            <td style="width: 20%;"><img src="~/img/user-pfp/@provider!.ProfilePicture" width="25px" height="25px">@provider!.UserName</td>
+                            <td style="width: 20%;">@order.Service!.Title</td>
+                            <td style="width: 20%;">
+                                @order.Status
+                                @switch (order.Status) {
+                                    case OrderStatus.Pending:
+                                        <i class="bi bi-clock"></i>
+                                        break;
+                                    case OrderStatus.Accepted:
+                                        <i class="bi bi-check text-success"></i>
+                                        break;
+                                    case OrderStatus.Refused:
+                                        <i class="bi bi-x text-danger"></i>
+                                        break;
+                                }
+                            </td>
+                            <td style="width: 20%;">@order.StartDate.ToString("yyyy-MM-dd")</td>
+                            <td style="width: 20%;">@(order.EndDate.HasValue ? order.EndDate.Value.ToString("yyyy-MM-dd") : "Not specified")</td>
+                            <td style="width: 20%;" class="">
+                                @if (order.Status == OrderStatus.Completed) {
+                                    <form method="post" asp-action="Acknowledge" asp-controller="Home">
+                                        <input type="hidden" name="orderId" value="@order.OrderId" />
+                                        <button type="submit" class="btn btn-primary"><i class="bi bi-check"></i> Acknowledge</button>
+                                    </form>
+                                } else if (order.Status == OrderStatus.Refused) {
+                                    <form method="post" asp-action="Delete" asp-controller="Home">
+                                        <input type="hidden" name="orderId" value="@order.OrderId" />
+                                        <button type="submit" class="btn btn-danger"><i class="bi bi-x"></i> Remove</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="mt-4">
+            <p>No orders found.</p>
+        </div>
+    }
+</div>

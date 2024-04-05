@@ -92,5 +92,6 @@ public enum OrderStatus {
     Pending,
     Accepted,
     Refused,
-    Completed
+    Completed,
+    Acknowledged
 }

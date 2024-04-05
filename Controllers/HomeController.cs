@@ -16,6 +16,10 @@ public class HomeController(AppDbContext dbContext, UserManager<AppUser> userMan
         return View();
     }
 
+    public IActionResult AboutUs() {
+        return View();
+    }
+
     public IActionResult Privacy() {
         return View();
     }
@@ -98,6 +102,7 @@ public class HomeController(AppDbContext dbContext, UserManager<AppUser> userMan
         return View(services);
     }
 
+    [Authorize]
     public async Task<IActionResult> Order(int id) {
         var service = dbContext.Services.FirstOrDefault(s => s.ServiceId == id);
         if (service is null) return NotFound();
@@ -112,12 +117,93 @@ public class HomeController(AppDbContext dbContext, UserManager<AppUser> userMan
             Service = service
         };
         dbContext.Orders.Add(order);
+        dbContext.SaveChanges();
 
-        return View();
+        return RedirectToAction("Orders");
     }
 
-    public IActionResult AboutUs() {
-        return View();
+    [Authorize]
+    public IActionResult Orders() {
+        var order = dbContext.Orders
+            .Include(o => o.Service)
+            .Where(o => o.ClientId == userManager.GetUserId(User));
+        return View(order);
+    }
+
+    [Authorize]
+    public IActionResult Services() {
+        var services = dbContext.Services
+            .Include(s => s.Orders)
+            .Where(s => s.ProviderId == userManager.GetUserId(User));
+        return View(services);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public IActionResult Accept(int orderId) {
+        var order = dbContext.Orders.FirstOrDefault(o => o.OrderId == orderId && o.Service!.ProviderId == userManager.GetUserId(User));
+        if (order is null) return NotFound();
+        if (order.Status == OrderStatus.Pending) {
+            order.Status = OrderStatus.Accepted;
+            dbContext.SaveChanges();
+        }
+
+        return RedirectToAction("Services");
+    }
+
+    [Authorize]
+    [HttpPost]
+    public IActionResult Refuse(int orderId) {
+        var order = dbContext.Orders.FirstOrDefault(o => o.OrderId == orderId && o.Service!.ProviderId == userManager.GetUserId(User));
+        if (order is null) return NotFound();
+        if (order.Status == OrderStatus.Pending) {
+            order.Status = OrderStatus.Refused;
+            dbContext.SaveChanges();
+        }
+        
+        return RedirectToAction("Services");
+    }
+
+    [Authorize]
+    [HttpPost]
+    public IActionResult Deliver(int orderId) {
+        var order = dbContext.Orders.FirstOrDefault(o => o.OrderId == orderId && o.Service!.ProviderId == userManager.GetUserId(User));
+        if (order is null) return NotFound();
+        if (order.Status == OrderStatus.Accepted) {
+            order.Status = OrderStatus.Completed;
+            dbContext.SaveChanges();
+        }
+
+        return RedirectToAction("Services");
+    }
+
+    [Authorize]
+    [HttpPost]
+    public IActionResult Delete(int orderId) {
+        var order = dbContext.Orders.FirstOrDefault(o => o.OrderId == orderId);
+        if (order is null) return NotFound();
+
+        string returnAction = order.ClientId == userManager.GetUserId(User) ? "Orders" : "Services";
+
+        if (order.Status == OrderStatus.Refused) {
+            dbContext.Orders.Remove(order);
+            dbContext.SaveChanges();
+        }
+
+        return RedirectToAction(returnAction);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public IActionResult Acknowledge(int orderId) {
+        var order = dbContext.Orders.FirstOrDefault(o => o.OrderId == orderId && o.ClientId == userManager.GetUserId(User));
+        if (order is null) return NotFound();
+        if (order.Status == OrderStatus.Completed) {
+            order.Status = OrderStatus.Acknowledged;
+            dbContext.SaveChanges();
+        }
+
+        return RedirectToAction("Orders");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
