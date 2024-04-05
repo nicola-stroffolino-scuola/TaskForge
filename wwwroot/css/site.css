@@ -118,3 +118,20 @@ body {
   background-color: rgba(255, 255, 255, 0.5); 
   border: none; 
 }
+
+/* --- */
+
+#language-select + button {
+  margin-top: -1px;
+
+  background-color: #fff;
+  color: #212529;
+}
+
+#language-select + button + .dropdown-menu.show {
+  max-height: 200px !important;
+}
+
+.dropdown.bootstrap-select.show-tick:has(#language-select + button) {
+  width: 100%;
+}

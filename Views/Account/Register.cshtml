@@ -10,119 +10,121 @@
 <div class="background-image-wrap2"></div>
 
 <div class="container">
-    <div class="text-center w-50 mx-auto">
-        <form class="w-75 mx-auto card p-3 transparent-form" asp-action="Register" method="post">
-            <h2 class="text-center  mb-3 ">@ViewData["Title"]</h2>
-            
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
-            <div class="form-group d-flex align-items-center justify-content-center mb-2">
-                <label asp-for="Name" class="w-25 text-end"></label>
-                <div class="w-75">
-                    <input asp-for="Name" placeholder="example" class="form-control w-75 mx-auto" required>
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-            </div>
-            
-            <div class="form-group d-flex align-items-center justify-content-center mb-2">
-                <label asp-for="Surname" class="w-25 text-end"></label>
-                <div class="w-75">
-                    <input asp-for="Surname" placeholder="example" class="form-control w-75 mx-auto" required>
-                    <span asp-validation-for="Surname" class="text-danger"></span>
-                </div>
-            </div>
-            
-            <div class="form-group d-flex align-items-center justify-content-center mb-2">
-                <label asp-for="Username" class="w-25 text-end"></label>
-                <div class="w-75">
-                    <input asp-for="Username" placeholder="example" class="form-control w-75 mx-auto" required>
-                    <span asp-validation-for="Username" class="text-danger"></span>
-                </div>
-            </div>
-            
-            <div class="form-group d-flex align-items-center justify-content-center mb-2">
-                <label asp-for="Email" class="w-25 text-end"></label>
-                <div class="w-75">
-                    <input asp-for="Email" placeholder="" class="form-control w-75 mx-auto" type="email" required>
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-            </div>
-            
-            <div class="form-group d-flex align-items-center justify-content-center mb-2">
-                <label asp-for="Password" class="w-25 text-end"></label>
-                <div class="w-75">
-                    <input asp-for="Password" placeholder="" class="form-control w-75 mx-auto" value="" type="password" required>
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-            </div>
-            
-            <div class="form-group d-flex align-items-center justify-content-center mb-2">
-                <label asp-for="ConfirmPassword" class="w-25 text-end"></label>
-                <div class="w-75">
-                    <input asp-for="ConfirmPassword" placeholder="" class="form-control w-75 mx-auto" value="" type="password" required>
-                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                </div>
-            </div>
-            
-            <div class="form-group d-flex align-items-center justify-content-center mb-2">
-                <label asp-for="Gender" class="w-25 text-end"></label>
-                <div class="d-flex justify-content-evenly w-75 flex-wrap">
-                    @foreach(var gender in Enum.GetValues(typeof(Gender)).Cast<Gender>()) {
-                        <div>
-                            <input value="@gender" asp-for="Gender" class="form-check-input" type="radio" name="gender-radio" id="@Enum.GetName(typeof(Gender), gender)" required> 
-                            <label class="form-check-label" for="@Enum.GetName(typeof(Gender), gender)">@Enum.GetName(typeof(Gender), gender)?.Replace('_', ' ')</label>
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-6">
+            <div class="text-center">
+                <form class="card p-3 transparent-form" asp-action="Register" method="post">
+                    <h2 class="text-center mb-3">@ViewData["Title"]</h2>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="Name" placeholder=" " class="form-control " required>
+                                    <label asp-for="Name" class="form-label text-light">Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="Surname" placeholder=" " class="form-control " required>
+                                    <label asp-for="Surname" class="form-label text-light">Surname</label>
+                                </div>
+                            </div>
                         </div>
-                    }
-                </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <input asp-for="Username" placeholder=" " class="form-control " required>
+                            <label asp-for="Username" class="form-label text-light">Username</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <input asp-for="Email" placeholder=" " class="form-control " type="email" required>
+                            <label asp-for="Email" class="form-label text-light">Email</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <input asp-for="Password" placeholder=" " class="form-control " type="password" required>
+                            <label asp-for="Password" class="form-label text-light">Password</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <input asp-for="ConfirmPassword" placeholder=" " class="form-control " type="password" required>
+                            <label asp-for="ConfirmPassword" class="form-label text-light">Confirm Password</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Gender" class="form-label">Gender</label>
+                                    <select asp-for="Gender" class="form-select" required>
+                                        <option value="">Select Gender</option>
+                                        @foreach(var gender in Enum.GetValues(typeof(Gender)).Cast<Gender>()) {
+                                            <option value="@gender">@Enum.GetName(typeof(Gender), gender)</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="DateOfBirth" class="form-label">Date of Birth</label>
+                                    <input asp-for="DateOfBirth" class="form-control" type="date" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <div class="form-group">
+                                    <label asp-for="Nationality" class="form-label">Nationality</label>
+                                    <select asp-for="Nationality" class="form-select" required> 
+                                        <option value="">Select Nationality</option>
+                                        @foreach(var nat in Enum.GetValues(typeof(Nationality)).Cast<Nationality>()) {
+                                            <option value="@nat">@Enum.GetName(typeof(Nationality), nat)</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <div class="form-group">
+                                    <label asp-for="Languages" class="form-label">Languages</label>
+                                    <select asp-for="Languages" class="selectpicker" id="language-select" required multiple>
+                                        @foreach(var lang in Enum.GetValues(typeof(Language)).Cast<Language>()) {
+                                            <option value="@lang">@Enum.GetName(typeof(Language), lang)</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                    </div>
+                    <div class="mb-2">
+                        <a asp-action="Login" class="text-decoration-none float-start mt-2">Already have an account?</a>
+                    </div>
+                </form>
             </div>
-            
-            <div class="form-group d-flex align-items-center justify-content-center mb-2">
-                <label asp-for="DateOfBirth" class="w-25 text-end"></label>
-                <div class="w-75">
-                    <input asp-for="DateOfBirth" class="form-control w-75 mx-auto" type="date" required>
-                </div>
-            </div>
-            
-            <div class="form-group d-flex align-items-center justify-content-center mb-3">
-                <label asp-for="Nationality" class="w-25 text-end">Nationality</label>
-                <div class="w-75">
-                    <select asp-for="Nationality" class="form-select w-75 mx-auto" required>
-                        <option value="" selected disabled>Select Nationality</option>
-                        @foreach(var nat in Enum.GetValues(typeof(Nationality)).Cast<Nationality>()) {
-                            <option value="@nat">@Enum.GetName(typeof(Nationality), nat)?.Replace('_', ' ')</option>
-                        }
-                    </select>
-                </div>
-            </div>
-            
-            <div class="form-group d-flex align-items-center justify-content-center mb-3">
-                <label asp-for="Languages" class="w-25 text-end">Languages</label>
-                <div class="w-75">
-                    <select asp-for="Languages" class="form-select w-75 mx-auto" id="multiple-checkboxes" required multiple>
-                        @foreach(var nat in Enum.GetValues(typeof(Language)).Cast<Language>()) {
-                            <option value="@nat">@Enum.GetName(typeof(Language), nat)?.Replace('_', ' ')</option>
-                        }
-                    </select>
-                </div>
-            </div>
-            
-            <div class="form-group d-flex align-items-center justify-content-center">
-                <button type="submit" class="btn btn-primary w-25">Sign Up</button>
-            </div>
-            <div class="form-group d-flex align-items-center justify-content-center mb-2">
-                <a asp-action="Login" class="text-decoration-none float-start mt-2">Already have an account?</a>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<script>
-    $(document).ready(function() {
-        $('#multiple-checkboxes').multiselect({
-          includeSelectAllOption: true,
-        });
-    });
-</script>
+
 
 @section Scripts{
     @{
