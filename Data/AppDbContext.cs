@@ -24,32 +24,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
             .Ignore(u => u.LockoutEnd)
             .Ignore(u => u.AccessFailedCount)
             .Property(e => e.Id).HasColumnName("UserId");
-            
-        modelBuilder.Entity<AppUser>()
-            .HasData(
-                new AppUser() {
-                    Name = "Admin",
-                    Surname = "Admin",
-                    UserName = "admin",
-                    NormalizedUserName = "ADMIN",
-                    Email = "admin@gmail.com",
-                    NormalizedEmail = "ADMIN@GMAIL.COM",
-                    Gender = "Male",
-                    DateOfBirth = new DateOnly(2000, 01, 01),
-                    Nationality = "Italian",
-                    Languages = "English,Italian",
-                    ProfilePicture = "default.png",
-                    PasswordHash = "AQAAAAIAAYagAAAAEGCS/ZW/brIXoz5cp3HLH+hWlgQg2gLtVrkkfXw+xSiNpHWS0NCcTD+5X57xfi5Z/w=="
-                }
-            );
-
-        modelBuilder.Entity<IdentityRole>()
-            .HasData(
-                new List<IdentityRole> {
-                    new() { Name = "Admin", NormalizedName = "ADMIN" },
-                    new() { Name = "User", NormalizedName = "USER" }
-                }
-            );
 
         modelBuilder.Entity<AppUser>().ToTable("Users");
         modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");

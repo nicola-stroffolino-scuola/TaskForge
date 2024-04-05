@@ -125,12 +125,21 @@ body {
 }
 
 #language-select + button + .dropdown-menu.show {
+  max-width: 100%;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+#language-select + button + .dropdown-menu.show > .inner.show {
   max-height: 200px !important;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .dropdown.bootstrap-select.show-tick:has(#language-select + button) {
   width: 100%;
 }
+
 .background-image4 {
   position: fixed;
   background-image: url('/img/wallpaper4.png'); 

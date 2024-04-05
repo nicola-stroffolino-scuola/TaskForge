@@ -18,9 +18,9 @@
                     <div class="mb-3">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-floating">
+                                <div class="form-floating bg-transparent">
                                     <input asp-for="Name" placeholder=" " class="form-control " required>
-                                    <label asp-for="Name" class="form-label text-light">Name</label>
+                                    <label asp-for="Name" class=" text-light">Name</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -68,7 +68,7 @@
                                     <select asp-for="Gender" class="form-select" required>
                                         <option value="">Select Gender</option>
                                         @foreach(var gender in Enum.GetValues(typeof(Gender)).Cast<Gender>()) {
-                                            <option value="@gender">@Enum.GetName(typeof(Gender), gender)</option>
+                                            <option value="@gender">@Enum.GetName(typeof(Gender), gender)!.Replace("_", " ")</option>
                                         }
                                     </select>
                                 </div>
@@ -90,7 +90,7 @@
                                     <select asp-for="Nationality" class="form-select" required> 
                                         <option value="">Select Nationality</option>
                                         @foreach(var nat in Enum.GetValues(typeof(Nationality)).Cast<Nationality>()) {
-                                            <option value="@nat">@Enum.GetName(typeof(Nationality), nat)</option>
+                                            <option value="@nat">@Enum.GetName(typeof(Nationality), nat)!.Replace("_", " ")</option>
                                         }
                                     </select>
                                 </div>
@@ -102,7 +102,7 @@
                                     <label asp-for="Languages" class="form-label">Languages</label>
                                     <select asp-for="Languages" class="selectpicker" id="language-select" required multiple>
                                         @foreach(var lang in Enum.GetValues(typeof(Language)).Cast<Language>()) {
-                                            <option value="@lang">@Enum.GetName(typeof(Language), lang)</option>
+                                            <option value="@lang">@Enum.GetName(typeof(Language), lang)!.Replace("_", " ")</option>
                                         }
                                     </select>
                                 </div>
