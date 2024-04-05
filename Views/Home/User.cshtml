@@ -7,7 +7,7 @@
 <div class="background-image3"></div>
 <div class="background-image-wrap3"></div>
 
-<div class="container profile-container transparent-form">
+<div class="container transparent-form p-4">
     <div class="row">
         <div class="col-md-4 text-center">
             <img src="~/img/user-pfp/@Model.ProfilePicture" alt="Profile Picture" class="profile-picture">
@@ -33,7 +33,7 @@
                 {
                     @foreach (var service in Model.Services)
                     {
-                        <div class="card mx-2 transparent-card" style="max-width: 200px;">
+                        <div class="card rounded border-0 mx-2" style="max-width: 200px;">
                             <div class="card-body">
                                 <h5 class="card-title">@service.Title</h5>
                                 <p class="card-text"><strong>Cost:</strong> $@service.Price</p>

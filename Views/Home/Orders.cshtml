@@ -7,8 +7,8 @@
     ViewData["Title"] = "My Orders";
 }
 
-<div class="container">
-    <h1 class="mt-5">@ViewData["Title"]</h1>
+<div class="container pt-5">
+    <h2>@ViewData["Title"]</h2>
 
     @if (Model != null && Model.Where(o => o.Status != OrderStatus.Acknowledged).Any())
     {
@@ -51,7 +51,7 @@
                             </td>
                             <td style="width: 20%;">@order.StartDate.ToString("yyyy-MM-dd")</td>
                             <td style="width: 20%;">@(order.EndDate.HasValue ? order.EndDate.Value.ToString("yyyy-MM-dd") : "Not specified")</td>
-                            <td style="width: 20%;" class="">
+                            <td style="width: 20%;">
                                 @if (order.Status == OrderStatus.Completed) {
                                     <form method="post" asp-action="Acknowledge" asp-controller="Home">
                                         <input type="hidden" name="orderId" value="@order.OrderId" />

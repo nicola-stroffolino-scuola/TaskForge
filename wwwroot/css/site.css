@@ -73,10 +73,6 @@ body {
   backdrop-filter: blur(10px); 
 }
 
-.profile-container {
-  margin-top: 20px;
-}
-
 .profile-picture {
   border-radius: 50%;
   width: 250px;

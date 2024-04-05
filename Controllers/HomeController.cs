@@ -83,16 +83,18 @@ public class HomeController(AppDbContext dbContext, UserManager<AppUser> userMan
     public IActionResult Service(int id) {
         var service = dbContext.Services
             .Include(s => s.Provider)
+            .Include(s => s.Reviews)
             .FirstOrDefault(s => s.ServiceId == id);
         return View("Service", service);
     }
 
     public IActionResult Browse(string q) {
-        if (q is null) return View(dbContext.Services.Include(s => s.Provider));
+        if (q is null) return View(dbContext.Services.Include(s => s.Reviews).Include(s => s.Provider));
 
         q = q.ToLower();
         var services = dbContext.Services
             .Include(s => s.Provider)
+            .Include(s => s.Reviews)
             .Where(s =>
                 (s.Title != null && s.Title.ToLower().Contains(q)) ||
                 (s.Description != null && s.Description.ToLower().Contains(q)) ||
@@ -214,8 +216,9 @@ public class HomeController(AppDbContext dbContext, UserManager<AppUser> userMan
     [Authorize]
     [HttpPost]
     public IActionResult Review(Review review) {
-
-        return View();
+        dbContext.Reviews.Add(review);
+        dbContext.SaveChanges();
+        return RedirectToAction("Browse");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,15 +1,14 @@
-@using TaskForge.Data;
+@using Microsoft.EntityFrameworkCore
+@using TaskForge.Data
+@inject AppDbContext dbContext;
 @model Service
 @{
     ViewData["Title"] = "Service";
 }
 
 <div class="container mt-4">
-
-    <!-- Product Details Section -->
     <div class="row">
         <div class="col-md-6">
-            <!-- Product Images Carousel -->
             <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     @{
@@ -42,7 +41,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Price: $@Model.Price</h5>
-                            <p class="card-text">Estimated Completition Time: @Model.EstimatedTime</p>
+                            <p class="card-text">Estimated Completion Time: @Model.EstimatedTime</p>
                             <a href="~/Home/Order/@Model.ServiceId" class="btn btn-primary">Order</a>
                         </div>
                     </div>
@@ -51,12 +50,54 @@
             <div class="row mt-4">
                 <div class="col">
                     <h2>Provider Information</h2>
-                    <p><strong>Name:</strong> @Model.Provider!.Name @Model.Provider.Surname</p>
-                    <p><strong>Email:</strong> @Model.Provider.Email</p>
+                    <p><strong>Full Name:</strong> @Model.Provider!.Name @Model.Provider.Surname</p>
+                    <p><strong>Nationality:</strong> @Model.Provider.Nationality</p>
                     <p><strong>Languages:</strong> @Model.Provider.Languages</p>
-                    <!-- Add more provider information as needed -->
                 </div>
             </div>
         </div>
     </div>
+    <div class="row mt-4">
+        <div class="col">
+            <h2>Reviews</h2>
+            @if (Model.Reviews.Any())
+            {
+                foreach (var review in Model.Reviews)
+                {
+                    var currReview = dbContext.Reviews.Include(r => r.Issuer).First(r => r.ReviewId == review.ReviewId);
+                    <div class="card mb-3">
+                        <div class="card-body align-items-center">
+                            <div class="d-inline">
+                                <h5 class="mt-0">
+                                    <img src="~/img/user-pfp/@currReview.Issuer!.ProfilePicture" class="rounded-circle mr-3" alt="Profile Picture" style="width: 32px; height: 32px;">
+                                    @currReview.Issuer!.UserName - <span class="text-secondary-emphasis">@review.Subject</span>
+                                </h5>
+                            </div>
+                            <div class="ml-auto text-warning">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    if (i <= review.Stars)
+                                    {
+                                        <i class="bi bi-star-fill"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-star"></i>
+                                    }
+                                }
+                            </div>
+                            <div>
+                                <p class="mb-0">@review.Text</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No reviews available for this service yet.</p>
+            }
+        </div>
+    </div>
+
 </div>

@@ -23,15 +23,18 @@
                 </div> *@
                 <div class="form-group">
                     <label>Stars</label>
-                    <div id="star-rating">
-                        <span class="star" data-rating="1">&#9733;</span>
+                    <div id="star-rating" class="d-inline">
+                        <span class="star selected" data-rating="1">&#9733;</span>
                         <span class="star" data-rating="2">&#9733;</span>
                         <span class="star" data-rating="3">&#9733;</span>
                         <span class="star" data-rating="4">&#9733;</span>
                         <span class="star" data-rating="5">&#9733;</span>
                     </div>
-                    <input asp-for="Stars" type="number" id="stars" required/>
+                    <input asp-for="Stars" type="number" class="d-inline" value="1" id="stars" required readonly/>
                 </div>
+
+                <input type="hidden" asp-for="ServiceId" value="@Model.ServiceId">
+                <input type="hidden" asp-for="IssuerId" value="@Model.IssuerId">
                 
                 <button type="submit" class="btn btn-primary">Submit Review</button>
                 <a href="~/Home/Browse" class="ms-2 text-decoration-none">No Thanks</a>
@@ -71,6 +74,11 @@
     }
 
     #stars {
-        display: none;
+        width: 36px;
+        border: none;
+        border-radius: .375rem;
+        background-color: #fff;
+        color: black;
+        text-align: center;
     }
 </style>

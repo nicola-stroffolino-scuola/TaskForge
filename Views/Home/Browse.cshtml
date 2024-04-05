@@ -14,7 +14,9 @@
     @if (Model != null) {
         <div class="row row-cols-3 row-cols-sm-4 row-cols-md-5 row-cols-lg-6 w-100 mx-auto">
             @foreach(var result in Model) {
-                var title = result.Title;
+                var averageStars = result.Reviews.Any() ? result.Reviews.Average(r => r.Stars) : 0;
+                var roundedStars = Math.Round(averageStars * 2, MidpointRounding.AwayFromZero) / 2;
+                
                 <div class="col p-1" id="@result.ServiceId">
                     <a href="~/Home/Service/@result.ServiceId" class="card h-100 oveflow-hidden text-decoration-none border-0" style="background-color: #f5f5f510;">
                         <div class="h-100 overflow-hidden rounded-top">
@@ -23,17 +25,16 @@
                             }
                         </div>
                        <div class="card-body mh-25 rounded-bottom">
-                            <h5 class="card-title text-truncate fs-6">@title</h5>
+                            <h5 class="card-title text-truncate fs-6">@result.Title</h5>
                             <div class="mt-2">
                                 <p class="mb-1 small"><strong>Price:</strong> $@result.Price</p>
                                 <p class="mb-1 small"><strong>Estimated Time:</strong> @result.EstimatedTime</p>
                             </div>
                             <div class="stars d-flex mt-2">
-                                <i class="bi bi-star star-filled text-warning me-1"></i>
-                                <i class="bi bi-star star-filled text-warning me-1"></i>
-                                <i class="bi bi-star star-filled text-warning me-1"></i>
-                                <i class="bi bi-star star-filled text-warning me-1"></i>
-                                <i class="bi bi-star star-filled text-warning me-1"></i>
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <i class="bi bi-star @(i <= roundedStars ? "star-filled text-warning" : "") me-1"></i>
+                                }
                             </div>
                         </div>
                     </a>
