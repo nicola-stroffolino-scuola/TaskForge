@@ -1,52 +1,62 @@
-@using TaskForge.Models;
-@model ServiceModel;
+@using TaskForge.Models
+@model ServiceModel
 @{
     ViewData["Title"] = "Publish Service";
 }
 
-<div class="text-center w-50 mx-auto">
-    <form class="w-75 mx-auto card p-3" asp-controller="Home" asp-action="Publish" method="post" enctype="multipart/form-data">
-        <h2 class="text-center text-info mb-3">@ViewData["Title"]</h2>
-        
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group d-flex align-items-center justify-content-center mb-2">
-            <label asp-for="Title" class="w-25 text-end"></label>
-            <div class="w-75">
-                <input type="text" asp-for="Title" placeholder="Title" class="form-control w-75 mx-auto">
-                <span asp-validation-for="Title" class="text-danger"></span>
+<div class="background-image4">
+    <div class="background-image-wrap4"></div>
+</div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-lg p-5 rounded transparent-form">
+                <h2 class="text-center text-primary">@ViewData["Title"]</h2>
+                
+                <form asp-controller="Home" asp-action="Publish" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    
+                    <div class="form-group mb-4">
+                        <label asp-for="Title" class="form-label fs-5">Title</label>
+                        <input type="text" asp-for="Title" placeholder="Enter title" class="form-control rounded-pill fs-6">
+                        <span asp-validation-for="Title" class="text-danger fs-6"></span>
+                    </div>
+                    
+                    <div class="form-group mb-4">
+                        <label asp-for="Description" class="form-label fs-5">Description</label>
+                        <textarea asp-for="Description" placeholder="Enter description" class="form-control rounded fs-6" rows="4"></textarea>
+                        <span asp-validation-for="Description" class="text-danger fs-6"></span>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label asp-for="Price" class="form-label fs-5">Price</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="number" min="1" max="@Int16.MaxValue" step="0.1" asp-for="Price" class="form-control rounded-pill fs-6">
+                            </div>
+                            <span asp-validation-for="Price" class="text-danger fs-6"></span>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label asp-for="EstimatedTime" class="form-label fs-5">Estimated Time</label>
+                            <input type="text" asp-for="EstimatedTime" placeholder="e.g., 2 hours" class="form-control rounded-pill fs-6">
+                            <span asp-validation-for="EstimatedTime" class="text-danger fs-6"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label asp-for="Images" class="form-label fs-5">Images</label>
+                        <input type="file" asp-for="Images" class="form-control fs-6" multiple accept="image/*">
+                    </div>
+                    
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary rounded-pill px-5 fs-5">Publish</button>
+                    </div>
+                </form>
             </div>
         </div>
-        <div class="form-group d-flex align-items-center justify-content-center mb-2">
-            <label asp-for="Description" class="w-25 text-end"></label>
-            <div class="w-75">
-                <textarea asp-for="Description" placeholder="Description" class="form-control w-75 mx-auto"></textarea>
-            </div>
-        </div>
-        <div class="form-group d-flex align-items-center justify-content-center mb-2">
-            <label asp-for="Price" class="w-25 text-end"></label>
-            <div class="w-75">
-                <input type="number" min="1" max="@Int16.MaxValue" step="0.1" asp-for="Price" class="form-control w-75 mx-auto">
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group d-flex align-items-center justify-content-center mb-2">
-            <label asp-for="EstimatedTime" class="w-25 text-end"></label>
-            <div class="w-75">
-                <input type="text" asp-for="EstimatedTime" class="form-control w-75 mx-auto">
-                <span asp-validation-for="EstimatedTime" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group d-flex align-items-center justify-content-center mb-2">
-            <label asp-for="Images" class="w-25 text-end"></label>
-            <div class="w-75">
-                <input type="file" asp-for="Images" class="form-control w-75 mx-auto" multiple accept="image/*">
-            </div>
-        </div>
-
-        <div class="form-group d-flex align-items-center justify-content-center">
-            <button type="submit" class="btn btn-primary w-25">Publish</button>
-        </div>
-    </form>
+    </div>
 </div>
 
 @section Scripts{
