@@ -78,8 +78,11 @@ public class Order {
 
 public class Review {
     public int ReviewId { get; set; }
+    [Required]
     public string? Subject { get; set; }
+    [Required]
     public string? Text { get; set; }
+    [Required]
     public double Stars { get; set; }
 
     public Service? Service { get; set; }

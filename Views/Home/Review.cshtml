@@ -1,0 +1,76 @@
+@using TaskForge.Data;
+@model Review;
+@{
+    ViewData["Title"] = "Write a Review";
+}
+
+<div class="container mt-5">
+    <div class="w-75 mx-auto card">
+        <div class="card-body">
+            <h1 class="text">@ViewData["Title"]</h1>
+            <form asp-action="Review" asp-controller="Home" method="post">
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" class="form-control" id="subject" asp-for="Subject" placeholder="Enter a subject for your review" required>
+                </div>
+                <div class="form-group">
+                    <label for="text">Review Text</label>
+                    <textarea class="form-control" id="text" asp-for="Text" rows="4" placeholder="Write your review here" required></textarea>
+                </div>
+                @* <div class="form-group">
+                    <label for="stars">Stars</label>
+                    <input type="number" class="form-control" id="stars" name="Stars" min="1" max="5" placeholder="Rate from 1 to 5" required>
+                </div> *@
+                <div class="form-group">
+                    <label>Stars</label>
+                    <div id="star-rating">
+                        <span class="star" data-rating="1">&#9733;</span>
+                        <span class="star" data-rating="2">&#9733;</span>
+                        <span class="star" data-rating="3">&#9733;</span>
+                        <span class="star" data-rating="4">&#9733;</span>
+                        <span class="star" data-rating="5">&#9733;</span>
+                    </div>
+                    <input asp-for="Stars" type="number" id="stars" required/>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Submit Review</button>
+                <a href="~/Home/Browse" class="ms-2 text-decoration-none">No Thanks</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const stars = document.querySelectorAll('.star');
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const rating = parseInt(star.getAttribute('data-rating'));
+                document.getElementById('stars').value = rating;
+                stars.forEach(s => {
+                    if (parseInt(s.getAttribute('data-rating')) <= rating) {
+                        s.classList.add('selected');
+                    } else {
+                        s.classList.remove('selected');
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+<style>
+    .star {
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .star.selected {
+        color: gold;
+    }
+
+    #stars {
+        display: none;
+    }
+</style>

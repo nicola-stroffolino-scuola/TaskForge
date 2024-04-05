@@ -19,8 +19,8 @@
                     <h2>@service.Title</h2>
                 </div>
                 <div class="card-body">
-                    @if (service.Orders.Any())
-                    {
+                    @if (service.Orders.Where(o => o.Status != OrderStatus.Acknowledged).Any())
+                    {   
                         <table class="table table-striped table-bordered">
                             <thead class="thead-dark">
                                 <tr class="align-middle text-center">
@@ -34,6 +34,7 @@
                             <tbody>
                                 @foreach (var order in service.Orders)
                                 {
+                                    if (order.Status == OrderStatus.Acknowledged) continue;
                                     var client = dbContext.Orders
                                         .Include(o => o.Client)
                                         .First(o => o.OrderId == order.OrderId).Client;

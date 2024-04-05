@@ -171,6 +171,7 @@ public class HomeController(AppDbContext dbContext, UserManager<AppUser> userMan
         if (order is null) return NotFound();
         if (order.Status == OrderStatus.Accepted) {
             order.Status = OrderStatus.Completed;
+            order.EndDate = DateTime.UtcNow;
             dbContext.SaveChanges();
         }
 
@@ -203,7 +204,18 @@ public class HomeController(AppDbContext dbContext, UserManager<AppUser> userMan
             dbContext.SaveChanges();
         }
 
-        return RedirectToAction("Orders");
+        Review newReview = new() {
+            ServiceId = order.ServiceId,
+            IssuerId = userManager.GetUserId(User)
+        };
+        return View("Review", newReview);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public IActionResult Review(Review review) {
+
+        return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
