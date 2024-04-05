@@ -92,7 +92,7 @@ public class Service {
 
 public class Order {
     public int OrderId { get; set; }
-    public string? Status { get; set; }
+    public OrderStatus Status { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime? EndDate { get; set; }
 
@@ -112,4 +112,11 @@ public class Review {
     public int ServiceId { get; set; }
     public AppUser? Issuer { get; set; }
     public string? IssuerId { get; set; }
+}
+
+public enum OrderStatus {
+    Pending,
+    Accepted,
+    Refused,
+    Completed
 }

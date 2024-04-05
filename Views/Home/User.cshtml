@@ -4,15 +4,13 @@
     ViewData["Title"] = Model.Name + " " + Model.Surname;
 }
 
-<link rel="stylesheet" href="~/css/styles.css">
-
 <div class="background-image3"></div>
 <div class="background-image-wrap3"></div>
 
 <div class="container profile-container transparent-form">
     <div class="row">
         <div class="col-md-4 text-center">
-            <img src="~/img/default/@Model.ProfilePicture" alt="Profile Picture" class="profile-picture">
+            <img src="~/img/user-pfp/@Model.ProfilePicture" alt="Profile Picture" class="profile-picture">
         </div>
         <div class="col-md-8">
             <h2>@Model.Name @Model.Surname</h2>

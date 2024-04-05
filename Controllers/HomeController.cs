@@ -1,9 +1,11 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaskForge.Data;
+using TaskForge.Data.Migrations;
 using TaskForge.Models;
 
 namespace TaskForge.Controllers;
@@ -94,6 +96,24 @@ public class HomeController(AppDbContext dbContext, UserManager<AppUser> userMan
             );
 
         return View(services);
+    }
+
+    public async Task<IActionResult> Order(int id) {
+        var service = dbContext.Services.FirstOrDefault(s => s.ServiceId == id);
+        if (service is null) return NotFound();
+
+        var client = await userManager.GetUserAsync(User);
+        if (client is null) return Forbid();
+
+        Order order = new() {
+            Status = OrderStatus.Pending,
+            StartDate = DateTime.UtcNow,
+            Client = client,
+            Service = service
+        };
+        dbContext.Orders.Add(order);
+
+        return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

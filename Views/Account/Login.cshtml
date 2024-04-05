@@ -4,21 +4,24 @@
     ViewData["Title"] = "Login";
 }
 
-<link rel="stylesheet" href="~/css/site.css">
+<div class="background-image"></div>
+<div class="background-image-wrap"></div>
 
-<div style="display: flex; justify-content: center; align-items: center; font-family: Arial, sans-serif;">
-    <div class="login-form">
-        <h2 style="text-align: center; color: #fcfbfb; margin-bottom: 20px;">Login</h2>
-        <form asp-action="Login" method="post">
+<div class="container mt-4">
+    <div class="d-flex justify-content-center align-items-center w-50 mx-auto">
+        <form class="transparent-form w-75 p-3" asp-action="Login" method="post">
+            <h2 style="text-align: center; color: #fcfbfb; margin-bottom: 20px;">Login</h2>
             <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-            <div class="mb-3">
-                <label asp-for="Username" class="form-label" style="color: #fff;">Username</label>
-                <input asp-for="Username" class="form-control transparent-input" />
+            <hr class="my-4">
+            
+            <div class="mb-3 form-floating">
+                <input asp-for="Username" class="form-control" placeholder=" "/>
+                <label asp-for="Username" class=" text-light">Username</label>
                 <span asp-validation-for="Username" class="text-danger" style="color: #fff;"></span>
             </div>
-            <div class="mb-3">
-                <label asp-for="Password" class="form-label" style="color: #fff;">Password</label>
-                <input asp-for="Password" class="form-control transparent-input" />
+            <div class="mb-3 form-floating">
+                <input asp-for="Password" class="form-control" placeholder=" "/>
+                <label asp-for="Password" class="form-label text-light" style="color: #fff;">Password</label>
                 <span asp-validation-for="Password" class="text-danger" style="color: #fff;"></span>
             </div>
             <div class="mb-3 form-check">
@@ -28,16 +31,17 @@
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-primary btn-lg">Login</button>
             </div>
+
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0" style="color: #fff;">Don't have an account?</p>
+                <a asp-action="Register" class="text-decoration-none">Sign Up</a>
+            </div>
         </form>
-        <hr class="my-4">
-        <div class="text-center">
-            <p class="mb-0" style="color: #fff;">Don't have an account?</p>
-            <a asp-action="Register" class="text-decoration-none" style="color: #fff;">Sign Up</a>
-        </div>
     </div>
 </div>
-<div class="background-image"></div>
-<div class="background-image-wrap"></div>
+
+
 
 @section Scripts{
     @{
